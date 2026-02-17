@@ -81,14 +81,14 @@ class UsersController < ApplicationController
       flash[:success] = "Profile updated."
       current_user.admin? ? redirect_to(users_path) : redirect_to(@user)
     elsif current_user.admin?
-      if params[:user_type].present? && @user.update_column(:user_type, params[:user_type])
+      if params[:user_type].present? && @user.update(user_type: params[:user_type])
         flash[:success] = "User type updated."
         redirect_to users_path
       elsif params[:admin].present?
         if current_user?(@user)
           flash[:error] = "You may not alter your own admin privileges!"
           redirect_to users_path
-        elsif @user.update_column(:admin, !@user.admin?)
+        elsif @user.update(admin: !@user.admin?)
           flash[:success] = "User permissions updated."
           redirect_to users_path
         else
