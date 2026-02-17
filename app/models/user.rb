@@ -120,6 +120,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Check if a password hash is a bcrypt hash (supports all bcrypt variants: $2$, $2a$, $2b$, $2x$, $2y$, etc.)
+  def bcrypt_hash?(hash)
+    hash&.match?(/\A\$2[a-z]?\$/)
+  end
+
   private
 
     def secret_word_okay
@@ -145,9 +150,4 @@ class User < ActiveRecord::Base
     def legacy_hash(submitted_password)
       Digest::SHA2.hexdigest("#{salt}--#{submitted_password}")
     end
-
-  # Check if a password hash is a bcrypt hash (supports all bcrypt variants: $2$, $2a$, $2b$, $2x$, $2y$, etc.)
-  def bcrypt_hash?(hash)
-    hash&.match?(/\A\$2[a-z]?\$/)
-  end
 end
