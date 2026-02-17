@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
 
   def has_password?(submitted_password)
     stored = encrypted_password
-    if stored&.match?(BCRYPT_PREFIX_PATTERN)
+    if stored && BCrypt::Password.valid_hash?(stored)
       BCrypt::Password.new(stored) == submitted_password
     else
       stored == legacy_hash(submitted_password)
@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
     return nil unless user&.has_password?(submitted_password)
 
     # Upgrade legacy SHA2 passwords to bcrypt transparently on login
-    if user.encrypted_password && !user.encrypted_password.match?(BCRYPT_PREFIX_PATTERN)
+    if user.encrypted_password && !BCrypt::Password.valid_hash?(user.encrypted_password)
       user.update_column(:encrypted_password, BCrypt::Password.create(submitted_password))
     end
 
