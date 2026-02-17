@@ -46,7 +46,7 @@ describe UsersController do
 
       it "should paginate users" do
         get :index
-        expect(response.body).not_to be_empty
+        expect(response.body).to include('class="pagination"')
       end
     end
   end
@@ -86,32 +86,32 @@ describe UsersController do
 
     it "should have a first name field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('name="user[fname]"')
     end
 
     it "should have a last name field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('name="user[lname]"')
     end
 
     it "should have an email field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('name="user[email]"')
     end
 
     it "should have a password field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('name="user[password]"')
     end
 
     it "should have a password confirmation field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('name="user[password_confirmation]"')
     end
 
     it "should have a secret word field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('name="user[secret_word]"')
     end
   end
 

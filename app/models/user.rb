@@ -19,6 +19,8 @@ require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password, :secret_word
 
+  BCRYPT_PREFIX_PATTERN = /^\$2[aby]\$/
+
   has_many :activities, dependent: :destroy
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -38,7 +40,7 @@ class User < ActiveRecord::Base
 
   def has_password?(submitted_password)
     stored = encrypted_password
-    if stored&.start_with?('$2a$', '$2b$')
+    if stored&.match?(BCRYPT_PREFIX_PATTERN)
       BCrypt::Password.new(stored) == submitted_password
     else
       stored == legacy_hash(submitted_password)
@@ -99,7 +101,7 @@ class User < ActiveRecord::Base
     return nil unless user&.has_password?(submitted_password)
 
     # Upgrade legacy SHA2 passwords to bcrypt transparently on login
-    if user.encrypted_password && !user.encrypted_password.start_with?('$2a$', '$2b$')
+    if user.encrypted_password && !user.encrypted_password.match?(BCRYPT_PREFIX_PATTERN)
       user.update_column(:encrypted_password, BCrypt::Password.create(submitted_password))
     end
 
