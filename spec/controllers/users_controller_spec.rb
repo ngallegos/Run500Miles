@@ -86,32 +86,32 @@ describe UsersController do
 
     it "should have a first name field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('id="user_fname"')
     end
 
     it "should have a last name field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('id="user_lname"')
     end
 
     it "should have an email field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('id="user_email"')
     end
 
     it "should have a password field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('id="user_password"')
     end
 
     it "should have a password confirmation field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('id="user_password_confirmation"')
     end
 
     it "should have a secret word field" do
       get :signup
-      expect(response.body).not_to be_empty
+      expect(response.body).to include('id="user_secret_word"')
     end
   end
 
