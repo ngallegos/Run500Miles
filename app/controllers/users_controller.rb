@@ -124,8 +124,10 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:fname, :lname, :email,
-                                   :password, :password_confirmation, :secret_word, :user_type)
+      permitted = [:fname, :lname, :email,
+                   :password, :password_confirmation, :secret_word]
+      permitted << :user_type if current_user&.admin?
+      params.require(:user).permit(*permitted)
     end
 
     def redirect_if_signed_in
