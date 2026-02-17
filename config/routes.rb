@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get  '/signup',  to: 'users#signup'
   get  '/statistics', to: 'users#statistics'
   get  '/signin',  to: 'sessions#new'
-  delete '/signout', to: 'sessions#destroy'
+  get  '/signout', to: 'sessions#destroy'
 
   root to: 'pages#home'
 end

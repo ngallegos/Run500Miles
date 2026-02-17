@@ -78,7 +78,10 @@ class Statistics
     c_data.new_column('number', 'Run/Walk Speed (mph)')
 
     user.activities.each do |act|
-      speed = act.distance / (act.hours.to_f + (act.minutes.to_f / 60))
+      duration_hours = act.hours.to_f + (act.minutes.to_f / 60)
+      next if duration_hours <= 0
+
+      speed = act.distance.to_f / duration_hours
       s = format("%0.2f", speed).to_f
       case act.activity_type
       when 1 then c_data.add_row([act.activity_date, s, nil, nil])

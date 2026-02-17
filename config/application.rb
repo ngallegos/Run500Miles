@@ -16,8 +16,8 @@ module Run500Miles
       # In production, require SECRET_KEY_BASE to be set; do not use a fallback
       config.secret_key_base = ENV.fetch('SECRET_KEY_BASE')
     else
-      # In non-production environments, allow a local placeholder fallback
-      config.secret_key_base = ENV.fetch('SECRET_KEY_BASE', 'run500miles_dev_secret_key_base_placeholder_not_for_production')
+      # In non-production, prefer ENV or generate via `rails credentials:edit`
+      config.secret_key_base = ENV['SECRET_KEY_BASE']
     end
   end
 end

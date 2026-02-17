@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate,     only: [:create, :destroy, :edit, :update]
+  before_action :authenticate,     only: [:new, :create, :destroy, :edit, :update]
   before_action :authorized_user,  only: [:edit, :update, :destroy]
 
   def new

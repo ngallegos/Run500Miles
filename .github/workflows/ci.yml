@@ -22,7 +22,7 @@ jobs:
       - name: Set up database
         env:
           RAILS_ENV: test
-        run: bundle exec rails db:migrate db:seed
+        run: bundle exec rails db:migrate
 
       - name: Run tests
         env:
