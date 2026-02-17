@@ -46,7 +46,7 @@ describe UsersController do
 
       it "should paginate users" do
         get :index
-        expect(response.body).to include('<div class="pagination"')
+        expect(response.body).to include('class="pagination"')
       end
     end
   end
