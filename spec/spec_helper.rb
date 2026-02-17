@@ -1,38 +1,37 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
-  # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
-  config.mock_with :rspec
+  config.include FactoryBot::Syntax::Methods
+  config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
 
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
   config.use_transactional_fixtures = true
-  
-  def test_sign_in(user)
-    controller.sign_in(user)
+  config.infer_spec_type_from_file_location!
+
+  config.before(:suite) do
+    # Seed required Configuration records for all tests
+    [
+      { key: 'secret-word',     value: 'angusbeef'      },
+      { key: 'quote-content',   value: 'Run your best.' },
+      { key: 'quote-source',    value: 'Anonymous'      },
+      { key: 'jquery-ui-theme', value: 'smoothness'     }
+    ].each do |attrs|
+      Configuration.find_or_create_by(key: attrs[:key]) { |c| c.value = attrs[:value] }
+    end
   end
-  
+
+  def test_sign_in(user)
+    controller.sign_in(user, "no")
+  end
+
   def integration_sign_in(user)
     visit signin_path
-    fill_in :email, :with => user.email
-    fill_in :password, :with => user.password
-    click_button
+    fill_in :email,    with: user.email
+    fill_in :password, with: user.password
+    click_button "Sign in"
   end
 end

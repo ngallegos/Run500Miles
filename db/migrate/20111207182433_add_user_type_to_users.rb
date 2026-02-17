@@ -1,4 +1,4 @@
-class AddUserTypeToUsers < ActiveRecord::Migration
+class AddUserTypeToUsers < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :user_type, :string, :default => "2"
   end

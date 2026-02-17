@@ -22,9 +22,9 @@ module ApplicationHelper
   
   # get the quote of the week
   def qotw
-    q_content = Configuration.find_by_key('quote-content')
-	q_source = Configuration.find_by_key('quote-source')
-    { :content => q_content.nil? ? '' : q_content.value, :source => q_source.nil? ? '' : q_source.value }
+    q_content = Configuration.find_by(key: 'quote-content')
+    q_source  = Configuration.find_by(key: 'quote-source')
+    { content: q_content&.value || '', source: q_source&.value || '' }
   end
   
   def logo
@@ -71,13 +71,15 @@ module ApplicationHelper
   end
   
   def jquery_ui_theme
-    jquery_theme = "jquery_ui/" + Configuration.find_by_key('jquery-ui-theme').value + "/jquery-ui-1.8.18.custom"
-	
-	if (!File.exists?("public/stylesheets/" + jquery_theme + ".css"))
-	  return "jquery_ui/smoothness/jquery-ui-1.8.18.custom"
-	else
-	  return jquery_theme
-	end
+    config = Configuration.find_by(key: 'jquery-ui-theme')
+    return "jquery_ui/smoothness/jquery-ui-1.8.18.custom" if config.nil?
+
+    jquery_theme = "jquery_ui/#{config.value}/jquery-ui-1.8.18.custom"
+    if File.exist?(Rails.root.join("public/stylesheets/#{jquery_theme}.css"))
+      jquery_theme
+    else
+      "jquery_ui/smoothness/jquery-ui-1.8.18.custom"
+    end
   end
   
 end

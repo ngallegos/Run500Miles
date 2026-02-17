@@ -1,43 +1,29 @@
 require 'spec_helper'
 
-describe "Activities" do
+describe "Activities", type: :request do
 
   before(:each) do
-    user = Factory(:user)
-    visit signin_path
-    fill_in :email,    :with => user.email
-    fill_in :password, :with => user.password
-    click_button
+    @user = create(:user)
+    post '/sessions', params: { session: { email: @user.email, password: @user.password } }
   end
-  
+
   describe "creation" do
-    
+
     describe "failure" do
-    
-      it "should not make a new micropost" do
-        lambda do
-          visit root_path
-          fill_in :activity_comment, :with => ""
-          click_button
-          response.should render_template('pages/home')
-          response.should have_selector("div#error_explanation")
-        end.should_not change(Activity, :count)
+      it "should not make a new activity" do
+        expect {
+          post '/activities', params: { activity: { activity_date: nil, distance: nil,
+                                                    hours: nil, minutes: nil } }
+        }.not_to change(Activity, :count)
       end
     end
 
     describe "success" do
-  
-      it "should make a new micropost" do
-        comment = "Lorem ipsum dolor sit amet"
-        lambda do
-          visit root_path
-          fill_in :activity_distance, :with => 1.0
-          fill_in :activity_hours, :with => 1
-          fill_in :activity_minutes, :with => 1
-          fill_in :activity_comment, :with => comment
-          click_button
-          response.should have_selector("span.content", :content => comment)
-        end.should change(Activity, :count).by(1)
+      it "should make a new activity" do
+        expect {
+          post '/activities', params: { activity: { activity_date: Date.today, distance: 2.0,
+                                                    hours: 0, minutes: 25, activity_type: 1 } }
+        }.to change(Activity, :count).by(1)
       end
     end
   end

@@ -1,31 +1,32 @@
-# By using the symbol ':user', we get Factory Girl to simulate the User model.
-Factory.define :user do |user|
-  user.fname                  "Nick"
-  user.lname                  "Gallegos"
-  user.email                 "nick.gallegos@example.com"
-  user.password              "foobar"
-  user.password_confirmation "foobar"
-  user.secret_word "angusbeef"
-end
+FactoryBot.define do
+  factory :user do
+    fname                 { "Nick" }
+    lname                 { "Gallegos" }
+    email                 { "nick.gallegos@example.com" }
+    password              { "foobar" }
+    password_confirmation { "foobar" }
+    secret_word           { "angusbeef" }
+  end
 
-Factory.sequence :fname do |n|
-  "First#{n}"
-end
+  sequence :fname do |n|
+    "First#{n}"
+  end
 
-Factory.sequence :lname do |n|
-  "Last#{n}"
-end
+  sequence :lname do |n|
+    "Last#{n}"
+  end
 
-Factory.sequence :email do |n|
-  "person-#{n}@example.com"
-end
+  sequence :email do |n|
+    "person-#{n}@example.com"
+  end
 
-Factory.define :activity do |activity|
-  activity.comment "comment"
-  activity.activity_date Date.today
-  activity.distance 2.0
-  activity.hours 0
-  activity.minutes 25
-  
-  activity.association :user
+  factory :activity do
+    comment       { "comment" }
+    activity_date { Date.today }
+    distance      { 2.0 }
+    hours         { 0 }
+    minutes       { 25 }
+    activity_type { 1 }
+    association :user
+  end
 end

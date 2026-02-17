@@ -1,14 +1,16 @@
 require 'spec_helper'
 
-describe "FriendlyForwardings" do
+describe "FriendlyForwardings", type: :request do
   it "should forward to the requested page after signin" do
-    user = Factory(:user)
-    visit edit_user_path(user)
-    # The test automatically follows the redirect to the signin page.
-    fill_in :email,    :with => user.email
-    fill_in :password, :with => user.password
-    click_button
-    # The test follows the redirect again, this time to users/edit.
-    response.should render_template('users/edit')
+    user = create(:user)
+    # Attempt to visit a protected page
+    get edit_user_path(user)
+    expect(response).to redirect_to(signin_path)
+
+    # Sign in
+    post '/sessions', params: { session: { email: user.email, password: user.password } }
+
+    # Should redirect to the originally requested edit page
+    expect(response).to redirect_to(edit_user_path(user))
   end
 end

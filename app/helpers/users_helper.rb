@@ -1,10 +1,10 @@
 module UsersHelper
-  
-  def gravatar_for(user, options = { :size => 50})
-    gravatar_image_tag(user.email.downcase,
-                       :alt => h(user.fname),
-                       :class => 'gravatar',
-                       :gravatar => options)
+
+  def gravatar_for(user, options = { size: 50 })
+    size         = options[:size] || 50
+    gravatar_id  = Digest::MD5.hexdigest(user.email.downcase)
+    gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
+    image_tag(gravatar_url, alt: h(user.fname), class: 'gravatar')
   end
   
   def toggle_family(user)

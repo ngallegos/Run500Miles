@@ -1,4 +1,4 @@
-class AddUserTypeIndex < ActiveRecord::Migration
+class AddUserTypeIndex < ActiveRecord::Migration[4.2]
   def self.up
     add_index :users, :user_type
   end
