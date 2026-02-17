@@ -19,6 +19,8 @@ require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password, :secret_word
 
+  BCRYPT_PREFIX_PATTERN = /^\$2[aby]\$/
+
   has_many :activities, dependent: :destroy
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
