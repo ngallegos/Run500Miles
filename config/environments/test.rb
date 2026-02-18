@@ -15,5 +15,6 @@ Rails.application.configure do
   config.active_record.maintain_test_schema = true
 
   # Set deterministic secret key for test environment
+  # WARNING: This is only for test environment - never use in production!
   config.secret_key_base = 'test_secret_key_base_for_test_environment'
 end
