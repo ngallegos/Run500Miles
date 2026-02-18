@@ -9,7 +9,7 @@ Rails.application.configure do
   config.action_controller.allow_forgery_protection = false
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :test
-  config.active_support.deprecation = :stderr
+  config.active_support.report_deprecations = false
   config.active_support.disallowed_deprecation = :raise
   config.active_support.disallowed_deprecation_warnings = []
   config.active_record.maintain_test_schema = true

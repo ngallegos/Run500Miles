@@ -6,7 +6,7 @@ Bundler.require(*Rails.groups)
 
 module Run500Miles
   class Application < Rails::Application
-    config.load_defaults 7.2
+    config.load_defaults 8.1
 
     # Filter sensitive parameters from logs
     config.filter_parameters += [:password]

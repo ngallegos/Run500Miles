@@ -1,21 +1,20 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 7.2'
-gem 'sqlite3', '~> 2.0'
-gem 'puma', '~> 6.0'
+gem 'rails', '~> 8.1'
+gem 'sqlite3', '~> 2.9'
+gem 'puma', '~> 7.0'
 gem 'bcrypt', '~> 3.1'
-gem 'gravatar_image_tag', '~> 1.2'
-gem 'will_paginate', '~> 3.3'
-gem 'google_visualr', '~> 2.3'
+gem 'will_paginate', '~> 4.0'
+gem 'google_visualr', '~> 2.5'
 
 group :development do
-  gem 'annotate', '~> 3.2'
+  gem 'annotaterb', '~> 4.0'
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 6.1'
-  gem 'factory_bot_rails', '~> 6.4'
-  gem 'faker', '~> 3.2'
+  gem 'rspec-rails', '~> 8.0'
+  gem 'factory_bot_rails', '~> 6.5'
+  gem 'faker', '~> 3.6'
   gem 'rails-controller-testing'
 end
 
