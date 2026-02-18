@@ -7,6 +7,10 @@
     {
       "matchManagers": ["bundler"],
       "groupName": "Ruby dependencies"
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "automerge": true
     }
   ],
   "labels": [
