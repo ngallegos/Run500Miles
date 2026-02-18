@@ -9,6 +9,7 @@
       "groupName": "Ruby dependencies"
     },
     {
+      "matchManagers": ["bundler"],
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "automerge": true,
       "automergeType": "pr"
