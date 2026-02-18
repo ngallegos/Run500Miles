@@ -3,10 +3,6 @@
   "extends": [
     "config:recommended"
   ],
-  "schedule": [
-    "before 5am on Monday"
-  ],
-  "timezone": "UTC",
   "packageRules": [
     {
       "matchManagers": ["bundler"],
