@@ -12,8 +12,7 @@ class SessionsController < ApplicationController
       render 'new'
     else
       sign_in(user, params[:persist].nil? ? "no" : params[:persist])
-      redirect_back_or root_path
-      #redirect_back_or user
+      redirect_back_or user_path(user)
     end
   end
   

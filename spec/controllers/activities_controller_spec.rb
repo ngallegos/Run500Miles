@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ActivitiesController do
   render_views
-  
+
   describe "access control" do
 
     it "should deny access to 'create'" do
@@ -11,72 +11,72 @@ describe ActivitiesController do
     end
 
     it "should deny access to 'destroy'" do
-      delete :destroy, :id => 1
+      delete :destroy, params: { id: 1 }
       response.should redirect_to(signin_path)
     end
   end
-  
+
   describe "POST 'create'" do
-    
+
     before(:each) do
-      @user = test_sign_in(Factory(:user))
+      @user = test_sign_in(create(:user))
     end
-  
+
     describe "failure" do
-      
+
       before(:each) do
-        @attr = { :activity_date => nil, :hours => nil, :minutes => nil, :distance => nil }
+        @attr = { activity_date: nil, hours: nil, minutes: nil, distance: nil }
       end
 
       it "should not create a activity" do
-        lambda do
-          post :create, :activity => @attr
-        end.should_not change(Activity, :count)
+        expect {
+          post :create, params: { activity: @attr }
+        }.not_to change(Activity, :count)
       end
 
-      it "should render the home page" do
-        post :create, :activity => @attr
-        response.should render_template('pages/home')
+      it "should render the new page" do
+        post :create, params: { activity: @attr }
+        response.should render_template('new')
       end
     end
-  
+
     describe "success" do
-      
+
       before(:each) do
-        @attr = { :activity_date => Date.today, :hours => 0, :minutes => 20, :distance => 2.5 }
+        @attr = { activity_date: Date.today, hours: 0, minutes: 20, distance: 2.5, activity_type: 1 }
       end
-      
+
       it "should create a activity" do
-        lambda do
-          post :create, :activity => @attr
-        end.should change(Activity, :count).by(1)
+        expect {
+          post :create, params: { activity: @attr }
+        }.to change(Activity, :count).by(1)
       end
-      
+
       it "should redirect to the home page" do
-        post :create, :activity => @attr
+        post :create, params: { activity: @attr }
         response.should redirect_to(root_path)
       end
-      
+
       it "should have a flash message" do
-        post :create, :activity => @attr
+        post :create, params: { activity: @attr }
         flash[:success].should =~ /activity logged/i
       end
     end
   end
-  
+
   describe "DELETE 'destroy'" do
 
     describe "for an unauthorized user" do
 
       before(:each) do
-        @user = Factory(:user)
-        wrong_user = Factory(:user, :email => Factory.next(:email))
+        @user      = create(:user)
+        wrong_user = create(:user, email: generate(:email))
         test_sign_in(wrong_user)
-        @activity = Factory(:activity, :user => @user)
+        @activity  = create(:activity, user: @user)
       end
 
       it "should deny access" do
-        delete :destroy, :id => @activity
+        delete :destroy, params: { id: @activity }
         response.should redirect_to(root_path)
       end
     end
@@ -84,14 +84,14 @@ describe ActivitiesController do
     describe "for an authorized user" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
-        @activity = Factory(:activity, :user => @user)
+        @user     = test_sign_in(create(:user))
+        @activity = create(:activity, user: @user)
       end
 
-      it "should destroy the micropost" do
-        lambda do 
-          delete :destroy, :id => @activity
-        end.should change(Activity, :count).by(-1)
+      it "should destroy the activity" do
+        expect {
+          delete :destroy, params: { id: @activity }
+        }.to change(Activity, :count).by(-1)
       end
     end
   end

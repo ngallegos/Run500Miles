@@ -10,9 +10,6 @@
 #
 
 class Configuration < ActiveRecord::Base
-  attr_accessible :key, :value
-  
-  validates :key, :presence => true,
-				  :uniqueness => { :case_sensitive => false }
-  validates :value, :presence => true
+  validates :key,   presence: true, uniqueness: { case_sensitive: false }
+  validates :value, presence: true
 end

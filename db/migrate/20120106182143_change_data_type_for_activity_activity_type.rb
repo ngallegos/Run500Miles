@@ -1,4 +1,4 @@
-class ChangeDataTypeForActivityActivityType < ActiveRecord::Migration
+class ChangeDataTypeForActivityActivityType < ActiveRecord::Migration[4.2]
   def self.up
     change_table :activities do |t|
 	  t.change :activity_type, :integer

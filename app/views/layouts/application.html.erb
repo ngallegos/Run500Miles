@@ -2,22 +2,21 @@
 <html>
   <head>
     <title><%= title %></title>
-    <%= csrf_meta_tag %>    
+    <%= csrf_meta_tags %>
     <%= render 'layouts/stylesheets' %>
-	<%= javascript_include_tag :jquery %>
-    <%= javascript_include_tag :defaults %>
-	<%= javascript_include_tag :jquery_ui %>
-	<% if title.include?('Statistics') %>
-	  <%= javascript_include_tag :graphs %>
-	<% end %>
+    <%= javascript_include_tag 'jquery-1.7.1.min' %>
+    <%= javascript_include_tag 'jquery-ui-1.8.17.custom.min' %>
+    <% if title.include?('Statistics') %>
+      <%= javascript_include_tag 'graphs' %>
+    <% end %>
   </head>
   <body>
-    <div class="container"  id="top">      
+    <div class="container" id="top">
       <%= render 'layouts/header' %>
       <section class="round">
         <% flash.each do |key, value| %>
-          <%= content_tag(:div, value, :class => "flash #{key}") %>
-        <% end %> 
+          <%= content_tag(:div, value, class: "flash #{key}") %>
+        <% end %>
         <%= yield %>
       </section>
       <%= render 'layouts/footer' %>

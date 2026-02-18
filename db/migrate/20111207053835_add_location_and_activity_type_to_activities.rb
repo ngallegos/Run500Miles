@@ -1,4 +1,4 @@
-class AddLocationAndActivityTypeToActivities < ActiveRecord::Migration
+class AddLocationAndActivityTypeToActivities < ActiveRecord::Migration[4.2]
   def self.up
     add_column :activities, :location, :string, :default => ""
     add_column :activities, :activity_type, :string, :default => "3"

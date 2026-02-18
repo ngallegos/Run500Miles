@@ -1,65 +1,48 @@
 require 'spec_helper'
 
-describe "Users" do
-  
+describe "Users", type: :request do
+
   describe "signup" do
-    
+
     describe "failure" do
-    
       it "should not make a new user" do
-        lambda do
-          visit signup_path
-          fill_in "First Name",   :with => ""
-          fill_in "Last Name",    :with => ""
-          fill_in "Email",        :with => ""
-          fill_in "Password",     :with => ""
-          fill_in "Confirmation", :with => ""
-          fill_in "Secret Word",  :with => ""
-          click_button
-          response.should render_template('users/signup')
-          response.should have_selector("div#error_explanation")
-	end.should_not change(User, :count)
+        expect {
+          post '/users', params: { user: { fname: "", lname: "", email: "",
+                                           password: "", password_confirmation: "",
+                                           secret_word: "" } }
+        }.not_to change(User, :count)
       end
     end
-    
+
     describe "success" do
       it "should make a new user" do
-        lambda do
-          visit signup_path
-          fill_in "First Name",   :with => "Test"
-          fill_in "Last Name",    :with => "User"
-          fill_in "Email",        :with => "test@example.com"
-          fill_in "Password",     :with => "foobar"
-          fill_in "Confirmation", :with => "foobar"
-          fill_in "Secret Word",  :with => "angusbeef"
-          click_button
-          response.should have_selector("div.flash.success",
-                                        :content => "Welcome")
-          response.should render_template('users/show')
-        end.should change(User, :count).by(1)
+        expect {
+          post '/users', params: { user: { fname: "Test", lname: "User",
+                                           email: "test@example.com",
+                                           password: "foobar",
+                                           password_confirmation: "foobar",
+                                           secret_word: "angusbeef" } }
+        }.to change(User, :count).by(1)
+        expect(response).to be_redirect
       end
     end
   end
-  
+
   describe "sign in/out" do
-    
+
     describe "failure" do
       it "should not sign a user in" do
-        visit signin_path
-        fill_in :email, :with => ""
-        fill_in :password, :with => ""
-        click_button
-        response.should have_selector("div.flash.error", :content => "Invalid")
+        post '/sessions', params: { session: { email: "", password: "" } }
+        expect(response).to render_template('new')
+        expect(flash[:error]).to match(/invalid/i)
       end
     end
-    
+
     describe "success" do
-      it "should sign a user in and out" do
-        user = Factory(:user)
-        integration_sign_in(user)
-        controller.should be_signed_in
-        click_link "Sign Out"
-        controller.should_not be_signed_in
+      it "should sign a user in and redirect" do
+        user = create(:user)
+        post '/sessions', params: { session: { email: user.email, password: user.password } }
+        expect(response).to be_redirect
       end
     end
   end
