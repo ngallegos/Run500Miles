@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 7.2'
+gem 'rails', '~> 8.0'
 gem 'sqlite3', '~> 2.0'
 gem 'puma', '~> 6.0'
 gem 'bcrypt', '~> 3.1'
