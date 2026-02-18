@@ -10,6 +10,13 @@
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "automerge": true,
       "automergeType": "pr"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions dependencies",
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "automerge": true,
+      "automergeType": "pr"
     }
   ],
   "labels": [
