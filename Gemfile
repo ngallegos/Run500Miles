@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 7.2'
 gem 'sqlite3', '~> 2.0'
-gem 'puma', '~> 6.0'
+gem 'puma', '~> 7.0'
 gem 'bcrypt', '~> 3.1'
 gem 'gravatar_image_tag', '~> 1.2'
 gem 'will_paginate', '~> 3.3'
