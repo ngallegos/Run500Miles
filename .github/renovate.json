@@ -10,7 +10,8 @@
     },
     {
       "matchUpdateTypes": ["minor", "patch", "digest"],
-      "automerge": true
+      "automerge": true,
+      "automergeType": "pr"
     }
   ],
   "labels": [
