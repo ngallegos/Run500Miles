@@ -162,7 +162,7 @@ GEM
       date
       stringio
     public_suffix (7.0.2)
-    puma (6.6.1)
+    puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.5)
@@ -267,7 +267,7 @@ DEPENDENCIES
   faker (~> 3.2)
   google_visualr (~> 2.3)
   gravatar_image_tag (~> 1.2)
-  puma (~> 6.0)
+  puma (~> 7.0)
   rails (~> 7.2)
   rails-controller-testing
   rspec-rails (~> 6.1)
