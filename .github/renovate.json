@@ -6,10 +6,7 @@
   "packageRules": [
     {
       "matchManagers": ["bundler"],
-      "groupName": "Ruby dependencies"
-    },
-    {
-      "matchManagers": ["bundler"],
+      "groupName": "Ruby dependencies",
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "automerge": true,
       "automergeType": "pr"
